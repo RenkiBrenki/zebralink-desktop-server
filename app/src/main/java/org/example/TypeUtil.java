@@ -6,17 +6,26 @@ import java.awt.event.KeyEvent;
 
 public class TypeUtil {
     private final Robot robot;
+    private int delay = 10;
     public static TypeUtil instance = new TypeUtil();
 
     private TypeUtil() {
         Robot tempRobot = null;
         try {
             tempRobot = new Robot();
-            tempRobot.setAutoDelay(10);
+            tempRobot.setAutoDelay(delay);
         } catch (AWTException e) {
             e.printStackTrace();
         }
         robot = tempRobot;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public int getDelay() {
+        return delay;
     }
 
     private boolean robotInitialized() {
@@ -39,6 +48,7 @@ public class TypeUtil {
         }
         pressAndRelease(KeyEvent.VK_TAB);
         pressAndRelease(KeyEvent.VK_ENTER);
+        robot.delay(delay);
     }
 
     private void pressAndRelease(char key) {

@@ -38,6 +38,9 @@ class Server implements AutoCloseable {
                 PrintWriter writer =
                         new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
 
+                setTypeDelay((reader.readLine()));
+                System.out.println("Delay set to " + TypeUtil.instance.getDelay());
+
                 String input;
                 while ((input = reader.readLine()) != null) {
                     List<Article> articles =
@@ -55,6 +58,14 @@ class Server implements AutoCloseable {
                 }
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void setTypeDelay(String delayResponse) {
+        try {
+            TypeUtil.instance.setDelay(Integer.parseInt(delayResponse));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 
