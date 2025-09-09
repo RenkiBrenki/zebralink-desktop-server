@@ -27,6 +27,7 @@ class Server implements AutoCloseable {
 
     private static String SUCCESS_MESSAGE = "Data received successfully";
 
+	
     public Server(Logger logger) throws IOException, AWTException {
         serverSocket = new ServerSocket(PORT);
         this.typeUtil = new TypeUtil();
