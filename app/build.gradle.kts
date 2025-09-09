@@ -36,6 +36,13 @@ java {
     }
 }
 
+shadowJar {
+    archiveBaseName.set('zebralink')
+    archiveVersion.set('1.0.0')
+    archiveClassifier.set('')
+    destinationDirectory.set(file("$rootDir/dist"))
+}
+
 application {
     // Define the main class for the application.
     mainClass = "si.elektroet.App"
