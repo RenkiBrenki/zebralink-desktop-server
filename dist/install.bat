@@ -5,7 +5,7 @@ REM --- Configuration ---
 SET SERVICE_NAME=ZebraLink
 SET SERVICE_DISPLAY_NAME=ZebraLink App Service
 SET SERVICE_DESCRIPTION=ZebraLink running as a Windows service
-SET JAR_PATH=%~dp0myapp.jar
+SET JAR_PATH=%~dp0zebralink-1.0.0.jar.jar
 SET WINSW_URL=https://github.com/winsw/winsw/releases/download/v2.12.0/WinSW-x64.exe
 SET WINSW_EXE=%~dp0%SERVICE_NAME%.exe
 SET WINSW_XML=%~dp0%SERVICE_NAME%.xml
