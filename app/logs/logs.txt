@@ -1,0 +1,40 @@
+Sep 09, 2025 1:10:38 PM org.example.Server start
+INFO: Accepted client /192.168.0.229
+Sep 09, 2025 1:10:38 PM org.example.Server start
+INFO: Delay set to 100
+Sep 09, 2025 1:10:38 PM org.example.Server start
+INFO: Entering article: code: 8034041461546, count: 2 
+Sep 09, 2025 1:16:31 PM si.elektroet.Server start
+INFO: Accepted client /192.168.0.229
+Sep 09, 2025 1:16:31 PM si.elektroet.Server start
+INFO: Delay set to 100
+Sep 09, 2025 1:16:32 PM si.elektroet.Server start
+INFO: Entering article: code: 8034041461546, count: 1 
+Sep 09, 2025 1:17:01 PM si.elektroet.Server start
+INFO: Accepted client /192.168.0.229
+Sep 09, 2025 1:17:01 PM si.elektroet.Server start
+INFO: Delay set to 100
+Sep 09, 2025 1:17:01 PM si.elektroet.Server start
+INFO: Entering article: code: 8034041461546, count: 1 
+Sep 09, 2025 1:17:04 PM si.elektroet.Server start
+INFO: Accepted client /192.168.0.229
+Sep 09, 2025 1:17:04 PM si.elektroet.Server start
+INFO: Delay set to 100
+Sep 09, 2025 1:17:04 PM si.elektroet.Server start
+INFO: Entering article: code: 8034041461546, count: 1 
+Sep 09, 2025 1:17:09 PM si.elektroet.Server start
+INFO: Accepted client /192.168.0.229
+Sep 09, 2025 1:17:09 PM si.elektroet.Server start
+INFO: Delay set to 100
+Sep 09, 2025 1:17:09 PM si.elektroet.Server start
+INFO: Entering article: code: 8034041461546, count: 1 
+Sep 09, 2025 1:17:10 PM si.elektroet.Server start
+INFO: Accepted client /192.168.0.229
+Sep 09, 2025 1:17:10 PM si.elektroet.Server start
+INFO: Delay set to 100
+Sep 09, 2025 1:17:10 PM si.elektroet.Server start
+INFO: Entering article: code: 8034041461546, count: 1 
+Sep 09, 2025 1:27:02 PM si.elektroet.Server start
+INFO: Accepted client /192.168.0.229
+Sep 09, 2025 1:27:02 PM si.elektroet.Server start
+INFO: Failed to set delay, delay is still set to: 100

@@ -5,4 +5,12 @@ package org.example;
 
 import static org.junit.Assert.*;
 
-public class AppTest {}
+import org.junit.Test;
+
+public class AppTest {
+    @Test
+    public void test() {
+        Integer i = 0;
+        assertNotNull(i);
+    }
+}

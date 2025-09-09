@@ -1,23 +1,17 @@
-package org.example;
+package si.elektroet;
 
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 
 public class TypeUtil {
     private final Robot robot;
     private int delay = 10;
-    public static TypeUtil instance = new TypeUtil();
 
-    private TypeUtil() {
-        Robot tempRobot = null;
-        try {
-            tempRobot = new Robot();
-            tempRobot.setAutoDelay(delay);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-        robot = tempRobot;
+    public TypeUtil() throws AWTException {
+        this.robot = new Robot();
+        robot.setAutoDelay(delay);
     }
 
     public void setDelay(int delay) {
@@ -28,21 +22,16 @@ public class TypeUtil {
         return delay;
     }
 
-    private boolean robotInitialized() {
-        if (robot == null) System.out.println("Failed to initialize robot!");
-        return robot != null;
-    }
-
     public void typeString(String string, int count) {
-        if (!robotInitialized()) return;
+        Objects.requireNonNull(string);
+        Objects.requireNonNull(count);
+
         for (int i = 0; i < count; i++) {
             typeString(string);
         }
     }
 
     public void typeString(String string) {
-        if (!robotInitialized()) return;
-
         for (char c : string.toCharArray()) {
             pressAndRelease(c);
         }
@@ -52,17 +41,17 @@ public class TypeUtil {
     }
 
     private void pressAndRelease(char key) {
-        if (!robotInitialized()) return;
         robot.keyPress(key);
         robot.keyRelease(key);
+        robot.delay(10);
     }
 
     /*
      * KeyEvent constants
      */
     private void pressAndRelease(int key) {
-        if (!robotInitialized()) return;
         robot.keyPress(key);
         robot.keyRelease(key);
+        robot.delay(10);
     }
 }
