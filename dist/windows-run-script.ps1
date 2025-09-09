@@ -28,7 +28,7 @@ if (-not $javaInstalled) {
     Write-Host "Java not found. Installing OpenJDK..."
 
     # Download OpenJDK (Temurin 21)
-    $jdkUrl = "https://github.com/adoptium/temurin21-binaries/releases/latest/download/OpenJDK21U-jre_x64_windows_hotspot.zip"
+    $jdkUrl = "https://api.adoptium.net/v3/binary/latest/21/ga/windows/x64/jdk/hotspot/normal/eclipse"
     $jdkZip = "$env:TEMP\OpenJDK.zip"
     $jdkInstallDir = "C:\Java\jdk-21"
 
