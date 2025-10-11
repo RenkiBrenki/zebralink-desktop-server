@@ -1,9 +1,9 @@
 # -----------------------------
 # Paths
 # -----------------------------
-$TargetFolder = "C:\zebralink-desktop-server\dist"
-$JarName = "zebralink-latest.jar"
-$AppPath = Join-Path $TargetFolder $JarName
+$TargetFolder = Join-Path $env:LOCALAPPDATA "ZebraLink"
+New-Item -ItemType Directory -Force -Path $TargetFolder
+$AppPath = Join-Path $TargetFolder "zebralink-latest.jar"
 
 # Create target folder if it doesn't exist
 if (-not (Test-Path $TargetFolder)) {
@@ -67,16 +67,27 @@ if (-not $javaInstalled) {
 # -----------------------------
 # Create Scheduled Task
 # -----------------------------
-$JavaPath = "javaw"  # Runs in background
+# Path to Java executable (javaw should be in PATH now)
+$JavaPath = "javaw"
 
-$WorkingDir = "C:\zebralink-desktop-server"
+# Use the folder containing the JAR as the working directory
+$WorkingDir = Split-Path $AppPath
 
+# Create the scheduled task action
 $Action = New-ScheduledTaskAction -Execute $JavaPath -Argument "-jar `"$AppPath`"" -WorkingDirectory $WorkingDir
+
+# Trigger at user logon
 $Trigger = New-ScheduledTaskTrigger -AtLogOn
+
+# Run as current user with highest privileges
 $Principal = New-ScheduledTaskPrincipal -UserId "$env:USERNAME" -LogonType Interactive -RunLevel Highest
+
+# Build the task object
 $Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Principal $Principal -Description "Start ZebraLink at login"
 
 # Register or overwrite existing task
 Register-ScheduledTask -TaskName "ZebraLink" -InputObject $Task -Force
 
 Write-Host "✅ ZebraLink task created. App will run on user logon in the background using javaw.exe"
+Write-Host "JAR path: $AppPath"
+Write-Host "Working directory: $WorkingDir"
