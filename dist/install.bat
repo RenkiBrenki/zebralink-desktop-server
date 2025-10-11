@@ -2,7 +2,7 @@
 REM -----------------------------
 REM URL of the PowerShell installer script
 REM -----------------------------
-set ScriptUrl=https://raw.githubusercontent.com/RenkiBrenki/zebralink-desktop-server/dist/windows-run-script.ps1
+set ScriptUrl=https://raw.githubusercontent.com/RenkiBrenki/zebralink-desktop-server/main/dist/windows-run-script.ps1
 
 REM Temporary path to save the downloaded script
 set TempScript=%TEMP%\zebralink-install.ps1
