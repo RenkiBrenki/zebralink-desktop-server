@@ -67,11 +67,12 @@ if (-not $javaInstalled) {
 # -----------------------------
 # Create Scheduled Task
 # -----------------------------
-# Path to Java executable (javaw should be in PATH now)
-$JavaPath = "javaw"
+# Path to Java executable
+$JavaPath = Join-Path $env:JAVA_HOME "bin\javaw.exe"
 
 # Use the folder containing the JAR as the working directory
-$WorkingDir = Split-Path $AppPath
+$JavaHome = [Environment]::GetEnvironmentVariable("JAVA_HOME", "User")
+$JavaPath = Join-Path $JavaHome "bin\javaw.exe"
 
 # Create the scheduled task action
 $Action = New-ScheduledTaskAction -Execute $JavaPath -Argument "-jar `"$AppPath`"" -WorkingDirectory $WorkingDir
