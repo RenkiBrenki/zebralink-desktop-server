@@ -35,10 +35,31 @@ if (-not $javaInstalled) {
     Invoke-WebRequest -Uri $jdkUrl -OutFile $jdkZip -UseBasicParsing
     Expand-Archive -LiteralPath $jdkZip -DestinationPath $jdkInstallDir -Force
 
-    # Add to PATH for current session
-    $env:PATH = "$jdkInstallDir\bin;$env:PATH"
+	# Find the actual extracted JDK folder (e.g. C:\Java\jdk-21\jdk-21.0.8+9)
+	$extractedDir = Get-ChildItem -Path $jdkInstallDir -Directory | Select-Object -First 1
+	$jdkRealDir = $extractedDir.FullName
 
-    Write-Host "Java installed at $jdkInstallDir"
+	# The bin directory path (where java.exe and javaw.exe live)
+	$binDir = Join-Path $jdkRealDir "bin"
+
+	# Verify
+	Write-Host "Detected JDK folder: $jdkRealDir"
+	Write-Host "Detected BIN path: $binDir"
+
+	# Add to current PATH
+	$env:PATH = "$binDir;$env:PATH"
+
+	# Permanently add to user PATH
+	$oldPath = [Environment]::GetEnvironmentVariable("Path", "User")
+	if ($oldPath -notlike "*$binDir*") {
+		$newPath = "$oldPath;$binDir"
+		[Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+		Write-Host "Added $binDir to PATH"
+	}
+
+	# Set JAVA_HOME for convenience
+	[Environment]::SetEnvironmentVariable("JAVA_HOME", $jdkRealDir, "User")
+	Write-Host "JAVA_HOME set to $jdkRealDir"
 } else {
     Write-Host "Java is already installed."
 }
