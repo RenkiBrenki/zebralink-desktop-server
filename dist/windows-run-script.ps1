@@ -1,14 +1,11 @@
 # -----------------------------
 # Paths
 # -----------------------------
-$TargetFolder = Join-Path $env:LOCALAPPDATA "ZebraLink"
-New-Item -ItemType Directory -Force -Path $TargetFolder
-$AppPath = Join-Path $TargetFolder "zebralink-latest.jar"
-
-# Create target folder if it doesn't exist
+$TargetFolder = Join-Path $env:ProgramData "ZebraLink"
 if (-not (Test-Path $TargetFolder)) {
-    New-Item -ItemType Directory -Path $TargetFolder -Force
+    New-Item -ItemType Directory -Force -Path $TargetFolder | Out-Null
 }
+$AppPath = Join-Path $TargetFolder "zebralink-latest.jar"
 
 # -----------------------------
 # Download latest JAR from GitHub
@@ -29,66 +26,52 @@ if (-not $javaInstalled) {
 
     # Download OpenJDK (Temurin 21)
     $jdkUrl = "https://api.adoptium.net/v3/binary/latest/21/ga/windows/x64/jdk/hotspot/normal/eclipse"
-    $jdkZip = "$env:TEMP\OpenJDK.zip"
+    $jdkZip = Join-Path $env:TEMP "OpenJDK.zip"
     $jdkInstallDir = "C:\Java\jdk-21"
+
+    if (-not (Test-Path $jdkInstallDir)) {
+        New-Item -ItemType Directory -Force -Path $jdkInstallDir | Out-Null
+    }
 
     Invoke-WebRequest -Uri $jdkUrl -OutFile $jdkZip -UseBasicParsing
     Expand-Archive -LiteralPath $jdkZip -DestinationPath $jdkInstallDir -Force
+    Remove-Item $jdkZip -Force
 
-	# Find the actual extracted JDK folder (e.g. C:\Java\jdk-21\jdk-21.0.8+9)
-	$extractedDir = Get-ChildItem -Path $jdkInstallDir -Directory | Select-Object -First 1
-	$jdkRealDir = $extractedDir.FullName
+    $extractedDir = Get-ChildItem -Path $jdkInstallDir -Directory | Select-Object -First 1
+    if (-not $extractedDir) {
+        Write-Error "Failed to find extracted JDK folder in $jdkInstallDir"
+        exit 1
+    }
 
-	# The bin directory path (where java.exe and javaw.exe live)
-	$binDir = Join-Path $jdkRealDir "bin"
+    $jdkRealDir = $extractedDir.FullName
+    $binDir = Join-Path $jdkRealDir "bin"
 
-	# Verify
-	Write-Host "Detected JDK folder: $jdkRealDir"
-	Write-Host "Detected BIN path: $binDir"
+    Write-Host "Detected JDK folder: $jdkRealDir"
+    Write-Host "Detected BIN path: $binDir"
 
-	# Add to current PATH
-	$env:PATH = "$binDir;$env:PATH"
+    $env:PATH = "$binDir;$env:PATH"
 
-	# Permanently add to user PATH
-	$oldPath = [Environment]::GetEnvironmentVariable("Path", "User")
-	if ($oldPath -notlike "*$binDir*") {
-		$newPath = "$oldPath;$binDir"
-		[Environment]::SetEnvironmentVariable("Path", $newPath, "User")
-		Write-Host "Added $binDir to PATH"
-	}
+    $oldPath = [Environment]::GetEnvironmentVariable("Path", "User")
+    if ($oldPath -notlike "*$binDir*") {
+        $newPath = "$oldPath;$binDir"
+        [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+        Write-Host "Added $binDir to PATH"
+    }
 
-	# Set JAVA_HOME for convenience
-	[Environment]::SetEnvironmentVariable("JAVA_HOME", $jdkRealDir, "User")
-	Write-Host "JAVA_HOME set to $jdkRealDir"
+    [Environment]::SetEnvironmentVariable("JAVA_HOME", $jdkRealDir, "User")
+    Write-Host "JAVA_HOME set to $jdkRealDir"
 } else {
     Write-Host "Java is already installed."
 }
 
 # -----------------------------
-# Create Scheduled Task
+# Create startup .bat
 # -----------------------------
-# Path to Java executable
-$JavaHome = [Environment]::GetEnvironmentVariable("JAVA_HOME", "User")
-$JavaPath = Join-Path $JavaHome "bin\javaw.exe"
+$zebralinkBat = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\Startup\zebralink.bat"
+$batchContent = @"
+@echo off
+start javaw -Xmx200m -jar "`"$AppPath`""
+"@
 
-# Use the folder containing the JAR as the working directory
-$WorkingDir = Split-Path $AppPath
-
-# Create the scheduled task action
-$Action = New-ScheduledTaskAction -Execute $JavaPath -Argument "-jar `"$AppPath`"" -WorkingDirectory $WorkingDir
-
-# Trigger at user logon
-$Trigger = New-ScheduledTaskTrigger -AtLogOn
-
-# Run as current user with highest privileges
-$Principal = New-ScheduledTaskPrincipal -UserId "$env:USERNAME" -LogonType Interactive -RunLevel Highest
-
-# Build the task object
-$Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Principal $Principal -Description "Start ZebraLink at login"
-
-# Register or overwrite existing task
-Register-ScheduledTask -TaskName "ZebraLink" -InputObject $Task -Force
-
-Write-Host "✅ ZebraLink task created. App will run on user logon in the background using javaw.exe"
-Write-Host "JAR path: $AppPath"
-Write-Host "Working directory: $WorkingDir"
+Set-Content -Path $zebralinkBat -Value $batchContent -Encoding ASCII
+Write-Host "Created startup script at `"$zebralinkBat`""
