@@ -70,7 +70,7 @@ if (-not $javaInstalled) {
 $zebralinkBat = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\Startup\zebralink.bat"
 $batchContent = @"
 @echo off
-start javaw -Xmx200m -jar "`"$AppPath`""
+start javaw -jar "`"$AppPath`""
 "@
 
 Set-Content -Path $zebralinkBat -Value $batchContent -Encoding ASCII
