@@ -27,8 +27,7 @@ if (-not $javaInstalled) {
     # Download OpenJDK (Temurin 21)
     $jdkUrl = "https://api.adoptium.net/v3/binary/latest/21/ga/windows/x64/jdk/hotspot/normal/eclipse"
     $jdkZip = Join-Path $env:TEMP "OpenJDK.zip"
-    $jdkInstallDir = "C:\Java\jdk-21"
-    $jdkInstallDir = Join-Path $env:ProgramData "jdk-21"
+    $jdkInstallDir = Join-Path $env:ProgramData "Java\jdk-21"
 
     if (-not (Test-Path $jdkInstallDir)) {
         New-Item -ItemType Directory -Force -Path $jdkInstallDir | Out-Null
