@@ -70,19 +70,23 @@ $JavaPath = Join-Path $JavaHome "bin\javaw.exe"
 
 # Use the folder containing the JAR as the working directory
 $WorkingDir = Split-Path $AppPath
-#
+
 # Create the scheduled task action
 $Action = New-ScheduledTaskAction -Execute $JavaPath -Argument "-jar `"$AppPath`"" -WorkingDirectory $WorkingDir
 
-# Trigger at user logon with 30-second delay
-$Trigger = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
+# Trigger at ANY user logon with 30-second delay
+$Trigger = New-ScheduledTaskTrigger -AtLogOn  # Remove -User parameter for any user
 $Trigger.Delay = "PT30S"
 
 # Run as current user with highest privileges
-$Principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType S4U -RunLevel Highest
+$Principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Highest
 
-# Task settings to run without prompting
-$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+# Task settings - configured for Windows 10
+$Settings = New-ScheduledTaskSettingsSet `
+    -AllowStartIfOnBatteries `
+    -DontStopIfGoingOnBatteries `
+    -StartWhenAvailable `
+    -Compatibility Win8  # Windows 10 uses Win8 compatibility mode
 
 # Build the task object
 $Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Principal $Principal -Settings $Settings -Description "Start ZebraLink at login"
