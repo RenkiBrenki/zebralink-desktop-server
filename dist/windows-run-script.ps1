@@ -64,14 +64,28 @@ if (-not $javaInstalled) {
     Write-Host "Java is already installed."
 }
 
-# -----------------------------
-# Create startup .bat
-# -----------------------------
-$zebralinkBat = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs\Startup\zebralink.bat"
-$batchContent = @"
-@echo off
-start javaw -jar "`"$AppPath`""
-"@
+# Path to Java executable
+$JavaHome = [Environment]::GetEnvironmentVariable("JAVA_HOME", "User")
+$JavaPath = Join-Path $JavaHome "bin\javaw.exe"
 
-Set-Content -Path $zebralinkBat -Value $batchContent -Encoding ASCII
-Write-Host "Created startup script at `"$zebralinkBat`""
+# Use the folder containing the JAR as the working directory
+$WorkingDir = Split-Path $AppPath
+#
+# Create the scheduled task action
+$Action = New-ScheduledTaskAction -Execute $JavaPath -Argument "-jar `"$AppPath`"" -WorkingDirectory $WorkingDir
+
+# Trigger at user logon with 30-second delay
+$Trigger = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
+$Trigger.Delay = "PT30S"
+
+# Run as current user with highest privileges
+$Principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType S4U -RunLevel Highest
+
+# Task settings to run without prompting
+$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+
+# Build the task object
+$Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Principal $Principal -Settings $Settings -Description "Start ZebraLink at login"
+
+# Register or overwrite existing task (run this script as Administrator)
+Register-ScheduledTask -TaskName "ZebraLink" -InputObject $Task -Force
