@@ -43,7 +43,7 @@ public class TypeUtil {
     private void pressAndRelease(char key) {
         robot.keyPress(key);
         robot.keyRelease(key);
-        robot.delay(10);
+        robot.delay(20);
     }
 
     /*
@@ -52,6 +52,6 @@ public class TypeUtil {
     private void pressAndRelease(int key) {
         robot.keyPress(key);
         robot.keyRelease(key);
-        robot.delay(10);
+        robot.delay(20);
     }
 }
