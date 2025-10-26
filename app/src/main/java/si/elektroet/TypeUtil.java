@@ -31,6 +31,18 @@ public class TypeUtil {
         }
     }
 
+    public void typeStringCombined(String string, int count) {
+        for (char c : string.toCharArray()) {
+            pressAndRelease(c);
+        }
+        pressAndRelease(KeyEvent.VK_TAB);
+        robot.keyPress(count);
+        robot.keyRelease(count);
+        // pressAndRelease(KeyEvent.VK_TAB);
+        pressAndRelease(KeyEvent.VK_ENTER);
+        robot.delay(delay);
+    }
+
     public void typeString(String string) {
         for (char c : string.toCharArray()) {
             pressAndRelease(c);

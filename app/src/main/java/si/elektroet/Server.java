@@ -45,7 +45,12 @@ class Server implements AutoCloseable {
                 PrintWriter writer =
                         new PrintWriter(new OutputStreamWriter(client.getOutputStream()));
 
-                setTypeDelay((reader.readLine()));
+                boolean combineCounts = Boolean.valueOf(reader.readLine());
+                if (combineCounts) {
+                    logger.info("Combining counts");
+                }
+
+                typeUtil.setDelay(parseResponse(reader.readLine()));
                 logger.info("Delay set to " + typeUtil.getDelay());
 
                 String input;
@@ -58,6 +63,10 @@ class Server implements AutoCloseable {
                                     String.format(
                                             "Entering article: code: %s, count: %s ",
                                             article.code(), article.count()));
+                            if (combineCounts) {
+                                typeUtil.typeStringCombined(article.code(), article.count());
+                                continue;
+                            }
                             typeUtil.typeString(article.code(), article.count());
                         } else {
                             logger.info("Article could not be entered, code or count is null");
@@ -78,8 +87,8 @@ class Server implements AutoCloseable {
         }
     }
 
-    private void setTypeDelay(String delayResponse) throws NumberFormatException {
-        typeUtil.setDelay(Integer.parseInt(delayResponse));
+    private int parseResponse(String res) throws NumberFormatException {
+        return Integer.parseInt(res);
     }
 
     @Override
