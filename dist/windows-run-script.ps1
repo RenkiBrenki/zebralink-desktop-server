@@ -10,7 +10,9 @@ $AppPath = Join-Path $TargetFolder "zebralink-latest.jar"
 # -----------------------------
 # Download latest JAR from GitHub
 # -----------------------------
-$JarUrl = "https://github.com/RenkiBrenki/zebralink-desktop-server/releases/latest/download/zebralink-1.0.0.jar"
+#https://raw.githubusercontent.com/RenkiBrenki/zebralink-desktop-server/main/dist/windows-run-script.ps1
+
+$JarUrl = "https://raw.githubusercontent.com/RenkiBrenki/zebralink-desktop-server/main/dist/zebralink-1.0.0.jar"
 
 Write-Host "Downloading latest ZebraLink JAR..."
 Invoke-WebRequest -Uri $JarUrl -OutFile $AppPath -UseBasicParsing

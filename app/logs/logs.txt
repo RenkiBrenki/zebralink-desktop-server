@@ -62,3 +62,55 @@ Oct 26, 2025 10:13:43 AM si.elektroet.Server start
 INFO: Delay set to 10
 Oct 26, 2025 10:13:43 AM si.elektroet.Server start
 INFO: Entering article: code: 4039677007513, count: 1 
+Oct 26, 2025 10:37:13 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.218
+Oct 26, 2025 10:37:13 AM si.elektroet.Server start
+INFO: Combining counts
+Oct 26, 2025 10:37:13 AM si.elektroet.Server start
+INFO: Delay set to 100
+Oct 26, 2025 10:37:13 AM si.elektroet.Server start
+INFO: Entering article: code: 4039677007513, count: 1 
+Oct 26, 2025 10:37:36 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.218
+Oct 26, 2025 10:37:36 AM si.elektroet.Server start
+INFO: Combining counts
+Oct 26, 2025 10:37:36 AM si.elektroet.Server start
+INFO: Delay set to 100
+Oct 26, 2025 10:37:36 AM si.elektroet.Server start
+INFO: Entering article: code: 4039677007513, count: 5 
+Oct 26, 2025 10:38:05 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.218
+Oct 26, 2025 10:38:05 AM si.elektroet.Server start
+INFO: Delay set to 100
+Oct 26, 2025 10:38:05 AM si.elektroet.Server start
+INFO: Entering article: code: 4039677007513, count: 2 
+Oct 26, 2025 11:18:43 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.136
+Oct 26, 2025 11:22:56 AM si.elektroet.Server start
+INFO: Failed to set delay, delay is still set to: 100
+Oct 26, 2025 11:22:56 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.136
+Oct 26, 2025 11:23:37 AM si.elektroet.Server start
+INFO: Failed to set delay, delay is still set to: 100
+Oct 26, 2025 11:23:37 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.136
+Oct 26, 2025 11:23:37 AM si.elektroet.Server start
+INFO: Failed to set delay, delay is still set to: 100
+Oct 26, 2025 11:24:28 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.136
+Oct 26, 2025 11:25:52 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.136
+Oct 26, 2025 11:44:43 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.218
+Oct 26, 2025 11:44:43 AM si.elektroet.Server start
+INFO: Delay set to 100
+Oct 26, 2025 11:44:43 AM si.elektroet.Server start
+INFO: Entering article: code: 4039677007513, count: 1 
+Oct 26, 2025 11:50:31 AM si.elektroet.Server start
+INFO: Accepted client /192.168.0.218
+Oct 26, 2025 11:50:31 AM si.elektroet.Server start
+INFO: Combining counts
+Oct 26, 2025 11:50:31 AM si.elektroet.Server start
+INFO: Delay set to 100
+Oct 26, 2025 11:50:31 AM si.elektroet.Server start
+INFO: Entering article: code: 4039677007513, count: 4 

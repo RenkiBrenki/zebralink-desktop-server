@@ -36,8 +36,9 @@ public class TypeUtil {
             pressAndRelease(c);
         }
         pressAndRelease(KeyEvent.VK_TAB);
-        robot.keyPress(count);
-        robot.keyRelease(count);
+        for (char c : String.valueOf(count).toCharArray()) {
+            pressAndRelease(c);
+        }
         // pressAndRelease(KeyEvent.VK_TAB);
         pressAndRelease(KeyEvent.VK_ENTER);
         robot.delay(delay);
